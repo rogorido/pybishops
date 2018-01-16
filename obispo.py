@@ -21,11 +21,26 @@ class Obispo:
     motivofin: el motivo del fin.
     """
 
+    def __new__(cls, creador):
+        """Eso es muy importante. Cuando no hay obispos aparece None y
+        entonces hay que abortar la creación de la clase. Esto de __new__
+        se ejecuta antes de __init__."""
+        # metemos el texto inicial en una variable 
+        cadena = creador.text
+
+        if cadena == "None\n":
+            return None
+        else:
+            return super(Obispo, cls).__new__(cls)
+        
     def __init__(self, creador):
         """El string creador es lo que viene de BeautifulSoup con
         el formateado de html."""
 
         self.creador = creador
+        # metemos el texto inicial en una variable 
+        self.cadena = creador.text
+
         # realmente el primer <a> es el nombre, aunque esto así hay
         # que tener cuidado. Lo guardamos como html porque nos permite sacar
         # lo que está en negrita que es el apellido. 
@@ -38,8 +53,6 @@ class Obispo:
         apellidohtml = nombrehtml.b
         self.apellido = apellidohtml.text
 
-        # metemos el texto inicial en una variable 
-        self.cadena = creador.text
         # esto es un poco cutre: a veces en el nombre/apellido
         # hay paréntesis y eso crea un lío cuando luego queremos
         # extraer los datos de las fechas. Con esto quitamos el nombre
