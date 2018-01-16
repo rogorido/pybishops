@@ -16,5 +16,5 @@ motivos = ('Died', 'Resigned', 'Appointed', 'Retired', 'Succeeded',
            'Confirmed')
 
 cargos = ('Archbishop (Personal Title)', 'Coadjutor Archbishop',
-          'Archbishop', 'Administrator', 'Bishop', 'Cardinal-Priest',
-          'Cardinal')
+          'Archbishop', 'Administrator', 'Auxiliary Bishop', 'Bishop', 'Cardinal-Priest',
+          'Cardinal', 'Prelate')
