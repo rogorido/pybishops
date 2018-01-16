@@ -29,8 +29,7 @@ class Obispo:
         # de la cadena esa. Un poco primitivo... habría que hacer un check
         # de cuántos paréntesis hay, etc. 
         self.cadena = self.cadena.replace(self.nombre, '')
-        print(self.cadena)
-
+        
         # quitamos el apellido del nombre para tener el nombre final.
         self.nombre = self.nombre.replace(self.apellido, '')
 
@@ -67,8 +66,6 @@ class Obispo:
         # hay un guión en esa cadena. Cuidado con esto.
         fecha = f.Fechas(fechas)
         self.motivofin = fecha.motivofin
-
-        print(self.motivofin, fecha.nombramiento)
 
         # si fecha.destino es true, quiere decir que el tipo se mueve
         # y por tanto intentamos extraer el último anchor que suele ser

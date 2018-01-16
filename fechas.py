@@ -49,7 +49,6 @@ class Fechas:
 
     def __extraerMotivo(self, cadena):
         """Extraemos el motivo del fin/inicio, etc."""
-        print(cadena)
         motivo = None
         for m in utils.motivos:
             if m in cadena:
