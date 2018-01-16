@@ -15,5 +15,6 @@ meses = ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
 motivos = ('Died', 'Resigned', 'Appointed', 'Retired', 'Succeeded',
            'Confirmed')
 
-cargos = ('Archbishop (Personal Title)', 'Archbishop', 'Administrator',
-          'Bishop', 'Cardinal-Priest', 'Cardinal')
+cargos = ('Archbishop (Personal Title)', 'Coadjutor Archbishop',
+          'Archbishop', 'Administrator', 'Bishop', 'Cardinal-Priest',
+          'Cardinal')

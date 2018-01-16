@@ -17,7 +17,8 @@ class Obispo:
     fechafin
     nombramiento
     destino: si es trasladado, a donde (href!)
-    motivo: el motivo del fin.
+    motivoinicio: el motivo del inicio (appointed casi siempre).
+    motivofin: el motivo del fin.
     """
 
     def __init__(self, creador):
@@ -85,6 +86,7 @@ class Obispo:
         fecha = f.Fechas(fechas)
         self.fechainicio = fecha.inicio
         self.fechafin = fecha.fin
+        self.motivoinicio = fecha.motivoinicio
         self.motivofin = fecha.motivofin
         self.nombramiento = fecha.nombramiento
 
