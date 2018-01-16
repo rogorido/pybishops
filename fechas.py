@@ -15,10 +15,18 @@ class Fechas:
         self.nombramiento = None
         self.destino = False
 
-        self.inicio = self.__crearFecha(inicio)
-        self.fin = self.__crearFecha(fin)
-        self.motivofin = self.__extraerMotivo(fin)
-
+        if len(inicio) > 0:
+            self.inicio = self.__crearFecha(inicio)
+        else:
+            self.inicio = None
+            
+        if len(fin) > 0:
+            self.fin = self.__crearFecha(fin)
+            self.motivofin = self.__extraerMotivo(fin)
+        else:
+            self.fin = None
+            self.motivofin = None
+            
     def __crearFecha(self, fecha):
         """Extraemos lo que sería la fecha para construir una string
         de fecha. Realmente hay que hacerlo de forma casuística."""
