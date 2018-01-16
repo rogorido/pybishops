@@ -15,18 +15,19 @@ class Fechas:
         self.nombramiento = None
         self.destinoboolean = False
         self.motivofin = None
+        self.motivoinicio = None
 
         if len(inicio) > 0:
             self.inicio = self.__crearFecha(inicio)
+            self.motivoinicio = self.__extraerMotivo(inicio, 0)
         else:
             self.inicio = None
             
         if len(fin) > 0:
             self.fin = self.__crearFecha(fin)
-            self.motivofin = self.__extraerMotivo(fin)
+            self.motivofin = self.__extraerMotivo(fin, 1)
         else:
             self.fin = None
-            self.motivofin = None
             
     def __crearFecha(self, fecha):
         """Extraemos lo que sería la fecha para construir una string
@@ -53,12 +54,13 @@ class Fechas:
             temporal = '{}-{}-01'.format(fechatramos[1], mes)
         return temporal
 
-    def __extraerMotivo(self, cadena):
-        """Extraemos el motivo del fin/inicio, etc."""
+    def __extraerMotivo(self, cadena, tipo):
+        """Extraemos el motivo del fin/inicio, etc. Lo de tipo es 0/1,
+        0 para inicio y 1 para fin."""
 
         # en los casos de 'Did not take effect' este motivofin
         # ya está puesto por lo que salimos...
-        if self.motivofin is not None:
+        if tipo == 1 and self.motivofin is not None:
             return self.motivofin
 
         motivo = None
@@ -67,13 +69,15 @@ class Fechas:
                 motivo = m
 
         # en el caso de Appointed podemos extraer el nombramiento...
-        if motivo == 'Appointed' or motivo == 'Succeeded' or motivo == 'Confirmed':
-            for c in utils.cargos:
-                if c in cadena:
-                    self.nombramiento = c
-                    self.destinoboolean = True
-                    break
-                else:
-                    self.nombramiento = None
+        # esto solo vale cuando estamos extrayendo el motivofin
+        if tipo == 1: 
+            if motivo == 'Appointed' or motivo == 'Succeeded' or motivo == 'Confirmed':
+                for c in utils.cargos:
+                    if c in cadena:
+                        self.nombramiento = c
+                        self.destinoboolean = True
+                        break
+                    else:
+                        self.nombramiento = None
                     
         return motivo
