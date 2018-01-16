@@ -13,7 +13,8 @@ class Fechas:
         fin = fecha[1].strip()
 
         self.nombramiento = None
-        self.destino = False
+        self.destinoboolean = False
+        self.motivofin = None
 
         if len(inicio) > 0:
             self.inicio = self.__crearFecha(inicio)
@@ -33,6 +34,11 @@ class Fechas:
 
         fechatramos = fecha.split(' ')
 
+        # aquí hay un problema: a veces aparece 'Did not take effect'
+        if fechatramos[0] == 'Did':
+            self.motivofin = 'Did not take effect'
+            return None
+
         if fechatramos[0].isdigit() and len(fechatramos[0]) < 3:
             # esto sería que la fecha empieza por un día
             # y por tanto hay día, mes, año
@@ -49,6 +55,12 @@ class Fechas:
 
     def __extraerMotivo(self, cadena):
         """Extraemos el motivo del fin/inicio, etc."""
+
+        # en los casos de 'Did not take effect' este motivofin
+        # ya está puesto por lo que salimos...
+        if self.motivofin is not None:
+            return self.motivofin
+
         motivo = None
         for m in utils.motivos:
             if m in cadena:
@@ -59,20 +71,9 @@ class Fechas:
             for c in utils.cargos:
                 if c in cadena:
                     self.nombramiento = c
-                    self.__extractPlaceDestination(cadena)
+                    self.destinoboolean = True
                     break
                 else:
                     self.nombramiento = None
                     
         return motivo
-
-    def __extractPlaceDestination(self, cadena):
-        """Aquí extraemos el lugar de destino a donde va uno que lo nombran
-        otra cosa. De todas formas, esto no está del todo bien, realmente
-        debería poner en la clase Obispo un sistema para que extraiga una 
-        referencia a la verdadera diócesis. 
-        """
-        indice = cadena.index('of') + 3
-        # self.destino = cadena[indice:]
-        self.destino = True
-
