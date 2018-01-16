@@ -12,6 +12,9 @@ class Fechas:
         inicio = fecha[0].strip()
         fin = fecha[1].strip()
 
+        self.nombramiento = None
+        self.destino = False
+
         self.inicio = self.__crearFecha(inicio)
         self.fin = self.__crearFecha(fin)
         self.motivofin = self.__extraerMotivo(fin)
@@ -50,6 +53,7 @@ class Fechas:
                 if c in cadena:
                     self.nombramiento = c
                     self.__extractPlaceDestination(cadena)
+                    break
                 else:
                     self.nombramiento = None
                     
@@ -62,5 +66,6 @@ class Fechas:
         referencia a la verdadera diócesis. 
         """
         indice = cadena.index('of') + 3
-        self.destino = cadena[indice:]
+        # self.destino = cadena[indice:]
+        self.destino = True
 
