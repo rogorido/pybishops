@@ -3,6 +3,7 @@
 
 import utils
 
+
 class Fechas:
     """Clase para gestionar el lío de las fechas."""
 
@@ -13,6 +14,7 @@ class Fechas:
 
         self.inicio = self.__crearFecha(inicio)
         self.fin = self.__crearFecha(fin)
+        self.motivofin = self.__extraerMotivo(fin)
 
     def __crearFecha(self, fecha):
         """Extraemos lo que sería la fecha para construir una string
@@ -32,5 +34,33 @@ class Fechas:
             # es un mes
             mes = utils.meses.index(fechatramos[0]) + 1
             temporal = '{}-{}-01'.format(fechatramos[1], mes)
-        print(temporal)
         return temporal
+
+    def __extraerMotivo(self, cadena):
+        """Extraemos el motivo del fin/inicio, etc."""
+        print(cadena)
+        motivo = None
+        for m in utils.motivos:
+            if m in cadena:
+                motivo = m
+
+        # en el caso de Appointed podemos extraer el nombramiento...
+        if motivo == 'Appointed' or motivo == 'Succeeded' or motivo == 'Confirmed':
+            for c in utils.cargos:
+                if c in cadena:
+                    self.nombramiento = c
+                    self.__extractPlaceDestination(cadena)
+                else:
+                    self.nombramiento = None
+                    
+        return motivo
+
+    def __extractPlaceDestination(self, cadena):
+        """Aquí extraemos el lugar de destino a donde va uno que lo nombran
+        otra cosa. De todas formas, esto no está del todo bien, realmente
+        debería poner en la clase Obispo un sistema para que extraiga una 
+        referencia a la verdadera diócesis. 
+        """
+        indice = cadena.index('of') + 3
+        self.destino = cadena[indice:]
+
