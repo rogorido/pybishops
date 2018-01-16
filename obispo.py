@@ -9,6 +9,7 @@ class Obispo:
     """Esto es una clase que crea obispos y devuelve sus datos.
 
     Las variables son:
+    url: del obispo 
     nombre
     apellido
     orden
@@ -28,6 +29,10 @@ class Obispo:
         # que tener cuidado. Lo guardamos como html porque nos permite sacar
         # lo que está en negrita que es el apellido. 
         nombrehtml = creador.a
+        # extraemos la url del obispo 
+        self.url = nombrehtml['href']
+
+        # luego el nombre, etc. 
         self.nombre = nombrehtml.text
         apellidohtml = nombrehtml.b
         self.apellido = apellidohtml.text
@@ -78,6 +83,8 @@ class Obispo:
         # las dividimos. Es importante usar ' - ' porque a veces
         # hay un guión en esa cadena. Cuidado con esto.
         fecha = f.Fechas(fechas)
+        self.fechainicio = fecha.inicio
+        self.fechafin = fecha.fin
         self.motivofin = fecha.motivofin
         self.nombramiento = fecha.nombramiento
 
