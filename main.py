@@ -44,8 +44,20 @@ def introducirDatos(diocesis, obispo):
         print(error)
 
 
+def extraerDiocesis():
+    """Extraemos las diócesis de la bd."""
 
-        
+    cur.execute("""SELECT d.diocese_id, d.url_hierarchy FROM dioceses d WHERE
+    diocese_id NOT IN (SELECT DISTINCT diocese_id FROM bishops_all)
+    AND d.url_hierarchy IS NOT NULL LIMIT 3;""")
+    rows = cur.fetchall()
+    # lo metemos en un dict porque así metemos también la id!
+    lista = {}
+    for r in rows:
+        lista[r[1]] = r[0]
+
+    return lista
+
 # conectamos a la bd 
 try:
     conn = psycopg2.connect("dbname='dominicos' user='igor' host='localhost'")
@@ -53,8 +65,8 @@ try:
 except:
     print("I am unable to connect to the database")
 
-lista_diocesis = []
-lista_diocesis.append('http://www.catholic-hierarchy.org/diocese/dr506.html')
+lista_diocesis = extraerDiocesis()
+#lista_diocesis.append('http://www.catholic-hierarchy.org/diocese/dr506.html')
 
 for diocesis in lista_diocesis:
     tipos = ['d3', 'd7']
@@ -62,14 +74,13 @@ for diocesis in lista_diocesis:
         dioc = d.Diocesis(diocesis, t)
         bishops = dioc.getObispos()
 
-        print('\nEstos son las datos\n---------------\n')
+        print('\nEstos son las datos de D{}-------'.format(lista_diocesis[diocesis]))
         for o in bishops:
             # en algunos casos el obispo es none porque realmente no
             # hay obispos!
             if o is not None:
                 if args.simular:
-                    introducirDatos(428, o)
-                    #print(o.__dict__)
+                    introducirDatos(lista_diocesis[diocesis], o)
                 else:
                     print(o.__dict__)
 
