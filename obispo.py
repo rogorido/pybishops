@@ -12,16 +12,23 @@ class Obispo:
     url: del obispo 
     nombre
     apellido
-    orden
+    orden: acrónimo de la orden
+    orden_id: id de la orden
     fechainicio
     fechafin
     nombramiento
     destino: si es trasladado, a donde (href!)
     motivoinicio: el motivo del inicio (appointed casi siempre).
     motivofin: el motivo del fin.
+    afiliado: eso de affiliated...
     """
 
-    def __new__(cls, creador):
+    # esto realmente es muy cutre porque va a hacer esta
+    # consulta casda vez que cree (sicher?) un bishop...
+    # pero es que no se me ocurre un sistema mejo...
+    acronimos, diccionario = utils.listaOrdenes()
+
+    def __new__(cls, creador, afiliado):
         """Eso es muy importante. Cuando no hay obispos aparece None y
         entonces hay que abortar la creación de la clase. Esto de __new__
         se ejecuta antes de __init__."""
@@ -33,9 +40,10 @@ class Obispo:
         else:
             return super(Obispo, cls).__new__(cls)
         
-    def __init__(self, creador):
+    def __init__(self, creador, afiliado):
         """El string creador es lo que viene de BeautifulSoup con
-        el formateado de html."""
+        el formateado de html. Afiliado es bool para saber qué tipo
+        de obispo es."""
 
         self.creador = creador
         # metemos el texto inicial en una variable 
@@ -64,8 +72,9 @@ class Obispo:
         self.nombre = self.nombre.replace(self.apellido, '')
 
         # inicializo algunas variables
-        self.fechainicio, self.fechafin = None, None
+        self.fechainicio, self.fechafin, self.orden_id = None, None, None
         self.orden, self.destino, self.nombramiento = None, None, None
+        self.afiliado = afiliado
 
         self.__extractOrder()
         self.__extractFechas()
@@ -74,9 +83,10 @@ class Obispo:
         print(self.cadena)
 
     def __extractOrder(self):
-        for n in utils.ordenes:
+        for n in self.acronimos:
             if n in self.cadena:
                 self.orden = n
+                self.orden_id = self.diccionario[n]
                 break
 
     def __extractFechas(self):

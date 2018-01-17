@@ -13,6 +13,10 @@ class Diocesis:
         self.obispos = []
         self.url = url
         self.tipo = tipo
+        if tipo == "d3": # esto son los normales
+            afiliado = False
+        else:
+            afiliado = True
 
         pagina = requests.get(url)
         # tenemos que usar html5lib como parser porque es menos
@@ -27,11 +31,11 @@ class Diocesis:
 
         self.listaobispos = listaobisposenbruto.find_all("li")
         for o in self.listaobispos:
-            self.anadirObispos(o)
+            self.anadirObispos(o, afiliado)
 
-    def anadirObispos(self, o):
+    def anadirObispos(self, o, afiliado):
         """El parámetro o es el string en html"""
-        nuevoob = obispo.Obispo(o)
+        nuevoob = obispo.Obispo(o, afiliado)
         self.obispos.append(nuevoob)
 
     def totalObispos(self):
