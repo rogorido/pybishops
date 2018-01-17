@@ -25,16 +25,21 @@ def introducirDatos(diocesis, obispo):
     """Esta es la función general que introduce los datos en la bd.
     Se le pasa un int para la diócesis y un objeto Obispo."""
     
-    sql = """INSERT INTO bishops.bishops_all(bishop_surname,
-    bishop_name, diocese_id, order_id, date_nomination, date_end,
-    reason_begin, reason_end, nomination, destination,
-    affiliated, url) VALUES(%s);"""
+    sql = """INSERT INTO bishops.bishops_all(bishop_surname, bishop_name,
+    diocese_id, religious_order, religious_order_id, date_nomination,
+    date_end, reason_begin, reason_end, nomination, destination,
+    affiliated, url) VALUES
+    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
     data = (obispo.nombre, obispo.apellido, diocesis,
-            obispo.orden_id, obispo.fechainicio, obispo.fechafin,
+            obispo.orden, obispo.orden_id, obispo.fechainicio, obispo.fechafin,
             obispo.motivoinicio, obispo.motivofin, obispo.nombramiento,
-            obispo.destino, obispo.afiliado, obispo.url)
+            obispo.destino, obispo.afiliado, obispo.url,)
+    
     try:
         cur.execute(sql, data)
+        conn.commit()
+        print('Introducido el obispo {} {}'.format(obispo.nombre,
+                                                   obispo.apellido))
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
 
@@ -55,12 +60,16 @@ for diocesis in lista_diocesis:
         dioc = d.Diocesis(diocesis, t)
         bishops = dioc.getObispos()
 
-        print('\nEstas son las órdenes\n---------------\n')
+        print('\nEstos son las datos\n---------------\n')
         for o in bishops:
             # en algunos casos el obispo es none porque realmente no
             # hay obispos!
             if o is not None:
-                print(o.__dict__)
+                if args.simular:
+                    introducirDatos(428, o)
+                    #print(o.__dict__)
+                else:
+                    print(o.__dict__)
 
 
 if args.simular:
