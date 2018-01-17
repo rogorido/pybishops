@@ -18,6 +18,9 @@ else:
     print("Ejecutando en modo simulación")
 
 
+# vamos a meter también el campo orden, aunque ya está lo de orden_id
+# porque tengo el lío de O.F.M. Obs. que no aparece en la tabla y
+# lo transformo a O.F.M. Conv. y no sé ahora mismo si no es un error...
 def introducirDatos(diocesis, obispo):
     """Esta es la función general que introduce los datos en la bd.
     Se le pasa un int para la diócesis y un objeto Obispo."""

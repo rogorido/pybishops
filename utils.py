@@ -22,6 +22,7 @@ cargos = ('Archbishop (Personal Title)', 'Coadjutor Archbishop',
           'Auxiliary Bishop', 'Coadjutor Bishop', 'Bishop', 'Cardinal-Priest',
           'Cardinal', 'Prelate')
 
+
 def listaOrdenes():
     try:
         conn = psycopg2.connect("dbname='dominicos' user='igor' host='localhost'")
