@@ -57,9 +57,9 @@ class Obispo:
         self.url = nombrehtml['href']
 
         # luego el nombre, etc. 
-        self.nombre = nombrehtml.text
+        self.nombre = nombrehtml.text.strip()
         apellidohtml = nombrehtml.b
-        self.apellido = apellidohtml.text
+        self.apellido = apellidohtml.text.strip()
 
         # esto es un poco cutre: a veces en el nombre/apellido
         # hay paréntesis y eso crea un lío cuando luego queremos

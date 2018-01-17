@@ -44,6 +44,8 @@ def introducirDatos(diocesis, obispo):
         print(error)
 
 
+
+        
 # conectamos a la bd 
 try:
     conn = psycopg2.connect("dbname='dominicos' user='igor' host='localhost'")

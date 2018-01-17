@@ -21,7 +21,7 @@ class Fechas:
             fecha = fecha.split(';')[-1]
             # ahora dividimos esto para sacar la fecha...
             datos = fecha.split(':')
-            self.motivoinicio = datos[0]
+            self.motivoinicio = datos[0].strip()
             fecha = datos[1]
 
         if afiliado:
