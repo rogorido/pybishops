@@ -83,8 +83,13 @@ class Obispo:
         print(self.cadena)
 
     def __extractOrder(self):
+        # entiendo que convetnuales y observantes es lo mismo, pero no hay
+        # el acrónimo O.F.M. Obs. por lo que hago este truquito
+        busqueda = self.cadena
+        if 'O.F.M. Obs.' in busqueda:
+            busqueda = 'O.F.M. Conv.'
         for n in self.acronimos:
-            if n in self.cadena:
+            if n in busqueda:
                 self.orden = n
                 self.orden_id = self.diccionario[n]
                 break
@@ -97,7 +102,7 @@ class Obispo:
 
         # las dividimos. Es importante usar ' - ' porque a veces
         # hay un guión en esa cadena. Cuidado con esto.
-        fecha = f.Fechas(fechas)
+        fecha = f.Fechas(fechas, self.afiliado)
         self.fechainicio = fecha.inicio
         self.fechafin = fecha.fin
         self.motivoinicio = fecha.motivoinicio

@@ -5,27 +5,45 @@ import utils
 
 
 class Fechas:
-    """Clase para gestionar el lío de las fechas."""
+    """Clase para gestionar el lío de las fechas. Los obispos afiliados
+    tienen una estructura de fechas diferente."""
 
-    def __init__(self, fecha):
-        fecha = fecha.split(' - ')
-        inicio = fecha[0].strip()
-        fin = fecha[1].strip()
+    def __init__(self, fecha, afiliado):
 
         self.nombramiento = None
         self.destinoboolean = False
         self.motivofin = None
         self.motivoinicio = None
 
+        if afiliado:
+            # los afiliados tienen varios datos que separan con ;
+            # normalmente el único que interesa es el último
+            fecha = fecha.split(';')[-1]
+            # ahora dividimos esto para sacar la fecha...
+            datos = fecha.split(':')
+            self.motivoinicio = datos[0]
+            fecha = datos[1]
+
+        if afiliado:
+            fecha = fecha.split(' to ')
+        else:
+            fecha = fecha.split(' - ')
+        inicio = fecha[0].strip()
+        fin = fecha[1].strip()
+
         if len(inicio) > 0:
             self.inicio = self.__crearFecha(inicio)
-            self.motivoinicio = self.__extraerMotivo(inicio, 0)
+            if not afiliado:
+                # entiendo que en el caso de los afiliados ya está...
+                self.motivoinicio = self.__extraerMotivo(inicio, 0)
         else:
             self.inicio = None
             
         if len(fin) > 0:
             self.fin = self.__crearFecha(fin)
-            self.motivofin = self.__extraerMotivo(fin, 1)
+            if not afiliado:
+                # entiendo que en el caso de los afiliados no hay motivo?
+                self.motivofin = self.__extraerMotivo(fin, 1)
         else:
             self.fin = None
             
