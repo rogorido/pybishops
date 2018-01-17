@@ -104,7 +104,7 @@ class Obispo:
         # hay un guión en esa cadena. Cuidado con esto.
         fecha = f.Fechas(fechas, self.afiliado)
         self.fechainicio = fecha.inicio
-        self.fechafin = fecha.fin
+        self.fechafin = fecha.final
         self.motivoinicio = fecha.motivoinicio
         self.motivofin = fecha.motivofin
         self.nombramiento = fecha.nombramiento

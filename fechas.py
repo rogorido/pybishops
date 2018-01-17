@@ -14,6 +14,7 @@ class Fechas:
         self.destinoboolean = False
         self.motivofin = None
         self.motivoinicio = None
+        self.final = None
 
         if afiliado:
             # los afiliados tienen varios datos que separan con ;
@@ -29,7 +30,12 @@ class Fechas:
         else:
             fecha = fecha.split(' - ')
         inicio = fecha[0].strip()
-        fin = fecha[1].strip()
+
+        # en algunas ocasiones solo hay una fecha
+        if len(fecha) == 1:
+            fin = None
+        else:
+            fin = fecha[1].strip()
 
         if len(inicio) > 0:
             self.inicio = self.__crearFecha(inicio)
@@ -38,14 +44,19 @@ class Fechas:
                 self.motivoinicio = self.__extraerMotivo(inicio, 0)
         else:
             self.inicio = None
-            
-        if len(fin) > 0:
-            self.fin = self.__crearFecha(fin)
+
+        # hay que comprobar que fin no sea None, es muy raro
+        # pero puede pasar...
+        if fin is None:
+            self.final = None
+        
+        if fin is not None and len(fin) > 0:
+            self.final = self.__crearFecha(fin)
             if not afiliado:
                 # entiendo que en el caso de los afiliados no hay motivo?
                 self.motivofin = self.__extraerMotivo(fin, 1)
-        else:
-            self.fin = None
+            else:
+                self.motivofin = None
             
     def __crearFecha(self, fecha):
         """Extraemos lo que sería la fecha para construir una string
