@@ -70,15 +70,6 @@ class Obispo:
         self.__extractOrder()
         self.__extractFechas()
         
-    def getName(self):
-        return self.nombre
-
-    def getSurname(self):
-        return self.apellido
-
-    def getOrder(self):
-        return self.orden
-
     def mostrarCadena(self):
         print(self.cadena)
 
