@@ -55,8 +55,6 @@ class Fechas:
             if not afiliado:
                 # entiendo que en el caso de los afiliados no hay motivo?
                 self.motivofin = self.__extraerMotivo(fin, 1)
-            else:
-                self.motivofin = None
             
     def __crearFecha(self, fecha):
         """Extraemos lo que sería la fecha para construir una string
