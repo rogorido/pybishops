@@ -66,7 +66,6 @@ except:
     print("I am unable to connect to the database")
 
 lista_diocesis = extraerDiocesis()
-#lista_diocesis.append('http://www.catholic-hierarchy.org/diocese/dr506.html')
 
 for diocesis in lista_diocesis:
     tipos = ['d3', 'd7']
