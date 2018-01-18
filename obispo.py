@@ -96,22 +96,30 @@ class Obispo:
 
     def __extractFechas(self):
         # TODO: a veces hay más de unos paréntesis!!
-        # extraemos las fechas de los paréntesis
-        fechas = self.cadena[self.cadena.index("(") +
-                             1:self.cadena.rindex(")")]
+        # extraemos las fechas de los paréntesis. En algunos casos
+        # no hay nada, por lo que lo comprobamos...
+        try:
+            fechas = self.cadena[self.cadena.index("(") +
+                                 1:self.cadena.rindex(")")]
 
-        # las dividimos. Es importante usar ' - ' porque a veces
-        # hay un guión en esa cadena. Cuidado con esto.
-        fecha = f.Fechas(fechas, self.afiliado)
-        self.fechainicio = fecha.inicio
-        self.fechafin = fecha.final
-        self.motivoinicio = fecha.motivoinicio
-        self.motivofin = fecha.motivofin
-        self.nombramiento = fecha.nombramiento
+            # las dividimos. Es importante usar ' - ' porque a veces
+            # hay un guión en esa cadena. Cuidado con esto.
+            fecha = f.Fechas(fechas, self.afiliado)
+            self.fechainicio = fecha.inicio
+            self.fechafin = fecha.final
+            self.motivoinicio = fecha.motivoinicio
+            self.motivofin = fecha.motivofin
+            self.nombramiento = fecha.nombramiento
 
-        # si fecha.destino es true, quiere decir que el tipo se mueve
-        # y por tanto intentamos extraer el último anchor que suele ser
-        # la referencia a adonde se mueve. 
-        if fecha.destinoboolean:
-            anchor = self.creador.find_all('a')[-1]
-            self.destino = anchor['href']
+            # si fecha.destino es true, quiere decir que el tipo se mueve
+            # y por tanto intentamos extraer el último anchor que suele ser
+            # la referencia a adonde se mueve. 
+            if fecha.destinoboolean:
+                anchor = self.creador.find_all('a')[-1]
+                self.destino = anchor['href']
+        except:
+            self.fechainicio = None
+            self.fechafin = None
+            self.motivoinicio = None
+            self.motivofin = None
+            self.nombramiento = None
