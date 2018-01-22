@@ -70,18 +70,27 @@ lista_diocesis = extraerDiocesis()
 for diocesis in lista_diocesis:
     tipos = ['d3', 'd7']
     for t in tipos:
-        dioc = d.Diocesis(diocesis, t)
-        bishops = dioc.getObispos()
+        # esto no sé si es lo mejor. Hay pocos casos en los que la
+        # diócesis no tiene nada y da un error lo de
+        #         listaobisposenbruto = obisposhtml.find("ul")
+        # en dioceses.py. Con esto se evita
+        # PERO: no sé si tiene otros efectos!
+        try: 
+            dioc = d.Diocesis(diocesis, t)
+            bishops = dioc.getObispos()
 
-        print('\nEstos son las datos de D{}-------'.format(lista_diocesis[diocesis]))
-        for o in bishops:
-            # en algunos casos el obispo es none porque realmente no
-            # hay obispos!
-            if o is not None:
-                if args.simular:
-                    introducirDatos(lista_diocesis[diocesis], o)
-                else:
-                    print(o.__dict__)
+            print('\nEstos son las datos de D{}-------'.format(lista_diocesis[diocesis]))
+            for o in bishops:
+                # en algunos casos el obispo es none porque realmente no
+                # hay obispos!
+                if o is not None:
+                    if args.simular:
+                        introducirDatos(lista_diocesis[diocesis], o)
+                    else:
+                        print(o.__dict__)
+        except:
+            print("En D{} no hay nada que extraer.".format(lista_diocesis[diocesis]))
+            
 
 
 if args.simular:

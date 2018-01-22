@@ -13,7 +13,7 @@ class Diocesis:
         self.obispos = []
         self.url = url
         self.tipo = tipo
-        if tipo == "d3": # esto son los normales
+        if tipo == "d3":  # esto son los normales
             afiliado = False
         else:
             afiliado = True
