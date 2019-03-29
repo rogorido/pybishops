@@ -49,7 +49,7 @@ def extraerDiocesis():
 
     cur.execute("""SELECT d.diocese_id, d.url_hierarchy FROM dioceses d WHERE
     diocese_id NOT IN (SELECT DISTINCT diocese_id FROM bishops_all)
-    AND d.url_hierarchy <>'' LIMIT 3;""")
+    AND d.url_hierarchy <>'' LIMIT 4;""")
     rows = cur.fetchall()
     # lo metemos en un dict porque así metemos también la id!
     lista = {}

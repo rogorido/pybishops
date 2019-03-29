@@ -97,7 +97,7 @@ class Fechas:
 
         # en el caso de Appointed podemos extraer el nombramiento...
         # esto solo vale cuando estamos extrayendo el motivofin
-        if tipo == 1: 
+        if tipo == 1:
             if motivo == 'Appointed' or motivo == 'Succeeded' or motivo == 'Confirmed':
                 for c in utils.cargos:
                     if c in cadena:
