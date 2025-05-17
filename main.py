@@ -47,9 +47,11 @@ def introducirDatos(diocesis, obispo):
 def extraerDiocesis():
     """Extraemos las diócesis de la bd."""
 
+    # quitamos una serie de ids pq dan problemas 
     cur.execute("""SELECT d.diocese_id, d.url_hierarchy FROM dioceses d WHERE
     diocese_id NOT IN (SELECT DISTINCT diocese_id FROM bishops_all)
-    AND d.url_hierarchy <>'' LIMIT 4;""")
+    AND d.url_hierarchy <>'' and d.diocese_id not in (402, 542, 734, 273, 347,
+    820, 242, 298) LIMIT 6;""")
     rows = cur.fetchall()
     # lo metemos en un dict porque así metemos también la id!
     lista = {}
